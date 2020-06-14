@@ -1,4 +1,4 @@
-from flask import (Flask, jsonify, render_template)
+from flask import (Flask, jsonify, render_template, request)
 import joblib
 
 app = Flask(__name__)
@@ -12,7 +12,8 @@ def hello_world():
 
 @app.route('/data')
 def data():
-    d = str(app.model.predict([[1, 1, 1]])).replace("[", "").replace("]","")
+    d = str(app.model.predict([[request.args.get("date"),request.args.get("lat"), request.args.get("lng")]])).replace("[", "").replace("]","")
+    print(d)
     return jsonify({"data": d})
 
 
