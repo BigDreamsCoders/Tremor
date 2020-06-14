@@ -22,14 +22,24 @@
   <body>
     <div class="controls">
       <div class="inputs">
-        {% for i in range(0, 3) %}
         <div class="input">
-          <label for="input{{ i }}">
-            Valor {{i}}
+          <label for="date">
+            Fecha
           </label>
-          <input id="input{{ i }}" type="text" />
+          <input id="date" type="date" />
         </div>
-        {% endfor %}
+        <div class="input">
+          <label for="lat">
+            Latitud
+          </label>
+          <input id="lat" type="text" />
+        </div>
+        <div class="input">
+          <label for="lng">
+            Longitud
+          </label>
+          <input id="lng" type="text" />
+        </div>
       </div>
 
       <button id="fetch">Get prediction</button>

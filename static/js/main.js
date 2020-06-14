@@ -1,3 +1,5 @@
+document.querySelector("#date").value = new Date().toISOString().split("T")[0]
+
 const icon = L.icon({
 	iconUrl:"/static/img/earthquake.png",
 	iconSize: [20, 20],
@@ -5,9 +7,25 @@ const icon = L.icon({
     popupAnchor: [-3, -76],
 })
 
-const mymap = L.map('mapid'/*,{icon, zoomControl:false}*/).setView([13.8333000, -88.9167000], 9);
+const mymap = L.map('mapid', {
+	scrollWheelZoom: false,
+	icon, zoomControl:false
+}).setView([13.8333000, -88.9167000], 9);
 
-L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+mymap.on('click', async (e)=>{
+	const {lat, lng} = e.latlng;
+	document.querySelector("#lat").value=lat
+	document.querySelector("#lng").value=lng
+	const marker = L.marker([lat, lng ]/*, {icon}*/).addTo(mymap)
+	const [Mag, Depth] = await fetchData()
+	marker.bindPopup(`
+		Magnitud: ${Mag}
+		Depth: ${Depth} Km
+	`).openPopup()
+})
+
+L.tileLayer(
+	'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
 		maxZoom: 18,
 		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
 			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -27,9 +45,13 @@ document.querySelector("#fetch").addEventListener('click', async ()=>{
 })
 
 const fetchData = async ()=>{
-	const response = await fetch('/data')
+	const date = document.querySelector("#date").value
+	const lat = document.querySelector("#lat").value
+	const lng = document.querySelector("#lng").value
+	const timeStamp = new Date(`${date}`.replace(/-/gi, '/')).getTime()
+	const query = `date=${timeStamp}&lat=${lat}&lng=${lng}`
+	const response = await fetch(`/data?${query}`)
     const {data} = (await response.json())
-	const [lat, log] = data.split(" ")
-	const marker = L.marker([lat, log ], {icon}).addTo(mymap)
-	marker.bindPopup("Here will be a tornado shake").openPopup()
+	const arr = data.trimStart().trimEnd().split(" ")
+	return [arr[0], arr[arr.length-1]]
 }
