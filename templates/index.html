@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+      integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+      crossorigin=""
+    ></script>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/main.css')}}"
+    />
+    <title>Tremor</title>
+  </head>
+  <body>
+    <div class="controls">
+      <div class="inputs">
+        {% for i in range(0, 3) %}
+        <div class="input">
+          <label for="input{{ i }}">
+            Valor {{i}}
+          </label>
+          <input id="input{{ i }}" type="text" />
+        </div>
+        {% endfor %}
+      </div>
+
+      <button id="fetch">Get prediction</button>
+    </div>
+
+    <div id="mapid"></div>
+
+    <script
+      type="text/javascript"
+      src="{{url_for('static', filename='js/main.js')}}"
+    ></script>
+  </body>
+</html>
