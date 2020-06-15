@@ -7,7 +7,7 @@
 }
 
 .navbar-brand img {
-    height:75px;
+    height:50px;
 }
 
 #mapid {
@@ -16,23 +16,31 @@
 
 body {
   display: grid;
-  grid-template-rows: 15% 25% 60%;
+  grid-template-rows: 10% 40% 50%;
   max-height: 100vh;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .controls {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding:20px;
+  background-color: #652a2a;
+  border-radius: 5px;
+  width: 60%;
+  height: 80%;
 }
 
 .inputs {
-  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  padding: 20px;
 }
 
 .input {
