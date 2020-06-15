@@ -11,13 +11,15 @@
 }
 
 #mapid {
-  height: 600px;
+  height: 500px;
+  margin: 1em 2em;
 }
 
 body {
   display: grid;
   grid-template-rows: 10% 25% 65%;
   max-height: 100vh;
+  margin:0;
 }
 
 .container {
@@ -25,6 +27,7 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: 100%;
 }
 
 .controls {
@@ -38,13 +41,14 @@ body {
   width: 60%;
   height: 80%;
   color: #ffffff;
+  padding: .5em;
 }
 
 .inputs {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  padding: 5px;
+  flex-flow: row wrap;
 }
 
 .input {

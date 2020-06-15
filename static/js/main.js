@@ -19,8 +19,10 @@ mymap.on('click', async (e)=>{
 	const marker = L.marker([lat, lng ]/*, {icon}*/).addTo(mymap)
 	const [Mag, Depth] = await fetchData()
 	marker.bindPopup(`
-		Magnitud: ${Mag}
-		Depth: ${Depth} Km
+		<ul>
+		<li>Magnitud: ${Mag}</li>
+		<li>Profundidad: ${Depth} Km</li>
+		<ul>
 	`).openPopup()
 })
 
@@ -36,13 +38,13 @@ L.tileLayer(
 	}).addTo(mymap);
 
 
-document.querySelector("#fetch").addEventListener('click', async ()=>{
+/*document.querySelector("#fetch").addEventListener('click', async ()=>{
 	const valu1 = document.querySelector("#input0").textContent
 	const valu2 = document.querySelector("#input1").textContent
 	const valu3 = document.querySelector("#input2").textContent
 	console.log(valu1, valu2, valu3)
 	await fetchData()
-})
+})*/
 
 const fetchData = async ()=>{
 	const date = document.querySelector("#date").value
