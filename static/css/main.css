@@ -60,3 +60,7 @@ button {
   height: 50px;
   margin-top: 1em;
 }
+
+#mapid {
+  margin: 5%;
+}
