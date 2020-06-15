@@ -2,7 +2,7 @@
 <p align="center">
   <a href="https://tremorsv.herokuapp.com/" target="blank"><img src="https://github.com/BigDreamsCoders/Tremor/blob/master/static/img/Logo%2BNombre.svg" width="500" alt="Tremor SV" /></a>
 </p>
-# Generalidades
+<H1>Generalidades<H1>
 <H2>Herramientas y licencias<H2>
   <H5>Flask <br>
     Es un framework minimalista escrito en Python que permite crear aplicaciones web rápidamente y con un mínimo número de líneas de código. Está basado en la especificación WSGI de Werkzeug y el motor de templates Jinja2.<br>
