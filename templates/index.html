@@ -36,30 +36,32 @@
         <img class="navbar-brand img" src="static/img/Logo+Nombre.svg" alt="">
       </a>
     </nav>
-    <div class="controls">
-      <div class="inputs">
-        <div class="input">
-          <label for="date">
-            Fecha
-          </label>
-          <input id="date" type="date" />
+    <div class="container">
+        <div class="controls">
+          <div class="inputs">
+            <div class="input">
+              <label for="date">
+                Fecha
+              </label>
+              <input id="date" type="date" />
+            </div>
+            <div class="input">
+              <label for="lat">
+                Latitud
+              </label>
+              <input id="lat" type="text" />
+            </div>
+            <div class="input">
+              <label for="lng">
+                Longitud
+              </label>
+              <input id="lng" type="text" />
+            </div>
+          </div>
+          <button id="fetch">Get prediction</button>
         </div>
-        <div class="input">
-          <label for="lat">
-            Latitud
-          </label>
-          <input id="lat" type="text" />
-        </div>
-        <div class="input">
-          <label for="lng">
-            Longitud
-          </label>
-          <input id="lng" type="text" />
-        </div>
-      </div>
-
-      <button id="fetch">Get prediction</button>
     </div>
+
 
     <div id="mapid"></div>
 
