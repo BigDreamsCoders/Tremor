@@ -13,7 +13,7 @@
   Es una biblioteca JavaScript de código abierto ampliamente utilizada para crear aplicaciones de mapeo web. Lanzado por primera vez en 2011, es compatible con la mayoría de las plataformas móviles y de escritorio, compatible con HTML5 y CSS3.<br>
  Licencia: BSD-2-Clause
   <H5>
-  <H5>Kaggle>br>
+  <H5>Kaggle<br>
     Es una subsidiaria de Google LLC, es una comunidad en línea de científicos de datos y profesionales del aprendizaje automático.<br>
     Licencia: Apache 2.0
     
