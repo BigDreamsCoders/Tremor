@@ -1,7 +1,11 @@
 const date = new Date()
 const fullDate = date.toISOString().split("T")[0]
 const hour = date.toLocaleTimeString().slice(0, -3)
-document.querySelector("#date").value = `${fullDate}T${hour}`
+document.querySelector("#date").value = `${fullDate}T${hour.length === 4 ? `0${hour}` : hour}`
+
+const loader = document.querySelector("#loader-container")
+
+const markers = []
 
 const mymap = L.map('mapid', {
     scrollWheelZoom: false, zoomControl: false
@@ -16,42 +20,30 @@ L.tileLayer(
         zoomOffset: -1
     }).addTo(mymap);
 
-
-/*
-mymap.on('click', async (e)=>{
-	const {lat, lng} = e.latlng;
-	document.querySelector("#lat").value=lat
-	document.querySelector("#lng").value=lng
-	const marker = L.marker([lat, lng ]/!*, {icon}*!/).addTo(mymap)
-	const [Mag, Depth] = await fetchData()
-	marker.bindPopup(`
-		<ul>
-		<li>Magnitud: ${Mag}</li>
-		<li>Profundidad: ${Depth} Km</li>
-		<ul>
-	`).openPopup()
+document.querySelector("#submit").addEventListener('click', async () => {
+    loader.style.visibility = "visible"
+    setTimeout(async () => {
+        const date = new Date(document.querySelector("#date").value).getTime()
+        const magnitudeElement = document.querySelector("#magnitude")
+        const depthElement = document.querySelector("#depth")
+        const magnitude = magnitudeElement.options[magnitudeElement.selectedIndex].value
+        const depth = depthElement.options[depthElement.selectedIndex].value
+        const [lat, lng] = await fetchData(date, magnitude, depth)
+        const marker = L.marker([Number(lat), Number(lng)]).addTo(mymap)
+        markers.push(marker)
+        loader.style.visibility = "hidden"
+    }, 5000)
 })
 
+document.querySelector("#clear").addEventListener('click', () => {
+    markers.forEach((mark) => {
+        mark.remove()
+    })
+})
 
-
-/*document.querySelector("#fetch").addEventListener('click', async ()=>{
-	const valu1 = document.querySelector("#input0").textContent
-	const valu2 = document.querySelector("#input1").textContent
-	const valu3 = document.querySelector("#input2").textContent
-	console.log(valu1, valu2, valu3)
-	await fetchData()
-})*/
-
-/*
-const fetchData = async ()=>{
-	const date = document.querySelector("#date").value
-	const lat = document.querySelector("#lat").value
-	const lng = document.querySelector("#lng").value
-	const timeStamp = new Date(`${date}`.replace(/-/gi, '/')).getTime()
-	const query = `date=${timeStamp}&lat=${lat}&lng=${lng}`
-	const response = await fetch(`/data?${query}`)
-    const {data} = (await response.json())
-	const arr = data.trimStart().trimEnd().split(" ")
-	return [arr[0], arr[arr.length-1]]
+const fetchData = async (timestamp, magnitude, depth) => {
+    const query = `timestamp=${timestamp}&magnitude=${magnitude}&depth=${depth}`
+    const response = await fetch(`/latitud?${query}`)
+    const {data} = await response.json()
+    return data.trim().split(" ");
 }
-*/
