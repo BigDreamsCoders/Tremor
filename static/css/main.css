@@ -1,75 +1,73 @@
-.navbar {
-    background-color: #cbb8b8;
-}
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-.navbar-brand {
-    padding-left:20px;
-}
-
-.navbar-brand img {
-    height:50px;
-}
-
-#mapid {
-  height: 500px;
-  margin: 1em 2em;
-}
-
-body {
-  display: grid;
-  grid-template-rows: 10% 25% 65%;
-  max-height: 100vh;
-  margin:0;
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    margin: 1em 0;
 }
 
-.controls {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: #cbb8b8;
-  border-color: #652a2a;
-  border-style: solid;
-  border-radius: 5px;
-  width: 60%;
-  height: 80%;
-  color: #ffffff;
-  padding: .5em;
+.logo {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+.logo>img{
+    width: 300px;
 }
 
 .inputs {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  flex-flow: row wrap;
+    margin: 0 auto;
+    width: 80%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.input {
-  display: flex;
-  flex-direction: column;
+.input-group {
+    width: 200px;
+    margin: 0 1em;
+    display: flex;
+    flex-direction: column;
 }
 
-.input > input {
-  height: 40px;
+.input-group > input, .input-group > select {
+    border: 2px solid #541313;
+    border-radius: 6px;
+    height: 2em;
 }
 
-button {
-  align-self: center;
-  width: 100px;
-  height: 50px;
-  margin-top: 1em;
-  border-color: #652a2a;
-  border-style: solid;
-  background-color: #ffffff;
+.input-group>label{
+    margin-bottom: .3em;
+}
+
+.input-group > input:focus, .input-group > select:focus {
+    outline: none !important;
+    border-color: red;
+}
+
+.btn{
+    border: 2px solid #541313;
+    border-radius: 6px;
+    height: 3em;
+    color: white;
+    font-size: 1.2em;
+    background-color: red;
 }
 
 #mapid {
-  margin: 5%;
+    height: 500px;
+    width: 80%;
+    margin: 0 auto;
+    border: 3px solid #cbb8b8;
 }
