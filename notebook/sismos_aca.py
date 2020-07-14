@@ -15,6 +15,7 @@ Existe una serie de herramientas externas que seran incluidas en el proyecto con
 !apt-get install libgeos
 !apt-get install libgeos-dev
 !pip install https://github.com/matplotlib/basemap/archive/master.zip
+print('done')
 
 !pip install pyproj==1.9.6
 
@@ -26,6 +27,10 @@ import pandas as pd
 import pylab as pl
 import numpy as np
 
+#Se usa de un archivo de Excel que se encuentra en nuestro drive
+from google.colab import drive
+drive.mount('/content/drive')
+
 # %matplotlib inline
 
 """Actualmente el equipo genero el csv. Este se baso en extraer información del SIG de sismos de MARM, realizando una consulta HTTP especificando la extraccción de datos registrados desde 2010 al presente día.
@@ -33,8 +38,8 @@ import numpy as np
 El [SIG](http://mapas.snet.gob.sv/geologia/sismicidad.phtml) útilizado proporciona información publica por lo que ha sido anexado para futura referencia
 """
 
-#Este modelo solo funciona correctamente si el archivo csv ha sido cargado a la plataforma
-df = pd.read_csv("Sismos-el-salvador.csv")
+#Este notebook depende del archivo csv para realizar todos los procesos
+df = pd.read_csv("drive/My Drive/Sismos-el-salvador.csv")
 df.head()
 
 #Este bloque de codigo es opcional y se encarga de filtrar el dataset de valores atipicos que se encuentran muy alejados de El Salvador
@@ -56,7 +61,7 @@ def twoDigit(field):
   return field if(int(field) > 9 and len(field) > 1) else '0'+str(field)
 
 
-for date, time, longitud, profundidad in zip(df["Fecha"], df['Hora local'], df['Longitud W(°)'], df['Profundidad (km)']):
+for date, time in zip(df["Fecha"], df['Hora local']):
     # Date format check
     dateSp = date.split()
     month = months.index(dateSp[0])
@@ -71,25 +76,20 @@ for date, time, longitud, profundidad in zip(df["Fecha"], df['Hora local'], df['
     timeFormat = hour +':'+ timeSp[1] +':'+ timeSp[2]
     ts = datetime.datetime.strptime(formatDate+' '+timeFormat, '%Y-%m-%d %I:%M:%S %p')
     timestamp.append(tlib.mktime(ts.timetuple()))
-    plusLon.append(longitud+100)
-    profundidadM.append(profundidad*1000)
+    
    
-print(timestamp) 
-print(plusLon) 
-print(profundidadM)
+print(timestamp)
 
 #Agrega las columnas especiales adicionales
 timeStamp = pd.Series(timestamp)
 df['Timestamp'] = timeStamp.values
-plusLongitud = pd.Series(plusLon)
-df['Pluslongitud'] = plusLongitud.values
-profundidadMetros = pd.Series(profundidadM)
-df['Profundidad (m)'] = profundidadMetros.values
 df.head()
 
 #Elimina columnas innecesarias para los modelos
 final_data = df.drop(['Fecha', 'Hora local'], axis=1)
 final_data = final_data[final_data.Timestamp != 'ValueError']
+
+
 final_data.head()
 
 final_data = final_data.drop(['Localizacion', 'Intensidad'], axis=1)
@@ -102,7 +102,9 @@ latitudes = final_data["Latitud N(°)"].tolist()
 
 x,y = m(longitudes,latitudes)
 
-"""Usando los datos extraidos del mapa se han marcado con puntos azules los terremotos registrados en El Salvador. Observando el mapa es posible notar las zonas con más frecuencia sismica. Con esta información visual se conjetura que existe un patrón, casi todos los terremotos registrados se forman atravesando el país y las costas."""
+"""## Mapa de actividad sísmica
+Usando los datos extraídos del mapa se han marcado con puntos azules los terremotos registrados en El Salvador. Observando el mapa es posible notar visualmente que existen zonas con gran frecuencia sísmica. Con esta información visual se conjetura que existe un patrón, casi todos los terremotos registrados se forman atravesando el país y las costas.
+"""
 
 #Crea un mapa digital del pais y le inserta datos
 fig = plt.figure(figsize=(12,10))
@@ -115,28 +117,28 @@ m.drawcountries()
 plt.show()
 
 """## Modelo de predicción de latitud y longuitud
-
-Este modelo tiene por objetivo determinar
+Utilizando los registros proporcionados por MARN nos enfocamos en analizar un análisis para un modelo. El objetivo es determinar si a través de una fecha, magnitud y profundidad es posible encontrar un patrón o relación con las coordenadas del terremoto.
 """
 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 
-x = final_data[['Timestamp','Magnitud','Profundidad (m)']]
+x = final_data[['Timestamp','Magnitud','Profundidad (km)']]
 y = final_data[['Latitud N(°)', 'Longitud W(°)']]
 
 
 # Sacar las variables dividiendolos datos
-x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.90, test_size=0.10, random_state=4)
+x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.80, test_size=0.20, random_state=20)
 max_depth = 100
 
 print(x_train.shape, x_test.shape, y_train.shape, x_test.shape)
 
 """### RandomForestRegressor"""
 
+#Se crear una regresión usando el algoritmo de random forest regressor
 from sklearn.ensemble import RandomForestRegressor
 
-regr_rf = RandomForestRegressor(n_estimators=1000, max_depth=max_depth,random_state=1, min_samples_split = 2, min_samples_leaf = 1)
+regr_rf = RandomForestRegressor(n_estimators=70, max_depth=max_depth,random_state=1, min_samples_split = 2, min_samples_leaf = 1)
 
 regr_rf.fit(x_train, y_train)
 y_ranfo = regr_rf.predict(x_test)
@@ -145,7 +147,7 @@ r2_score(y_test, y_ranfo)
 
 from sklearn.model_selection import GridSearchCV
 
-n_estimators = [100, 300, 500, 800, 1200]
+n_estimators = [40, 80, 120, 140, 160]
 max_depth = [5, 8, 15, 25, 30]
 min_samples_split = [2, 5, 10, 15, 100]
 min_samples_leaf = [1, 2, 5, 10] 
@@ -157,6 +159,9 @@ hyperF = dict(n_estimators = n_estimators, max_depth = max_depth,
 gridF = GridSearchCV(regr_rf, hyperF, cv = 3, verbose = 1, 
                       n_jobs = -1)
 bestF = gridF.fit(x_train, y_train)
+
+y_grid = bestF.predict(x_test)
+print(r2_score(y_test, y_grid, multioutput='variance_weighted'))
 
 """### MultiOutputRegressor"""
 
@@ -172,73 +177,18 @@ r2_score(y_test, y_multirf, multioutput='variance_weighted')
 
 from sklearn.neighbors import KNeighborsRegressor
 
-k_neighbor = KNeighborsRegressor(n_neighbors=2000, weights='distance',leaf_size=50 )
+k_neighbor = KNeighborsRegressor(n_neighbors=70, weights='distance',leaf_size=50 )
 k_neighbor.fit(x_train, y_train)
 y_pred = k_neighbor.predict(x_test)
 
 r2_score(y_test, y_pred, multioutput='variance_weighted')
 
-"""### Neural Network"""
-
-from keras.models import Sequential
-from keras.layers import Dense
-
-def create_model(neurons, activation, optimizer, loss):
-    model = Sequential()
-    model.add(Dense(neurons, activation=activation, input_shape=(3)))
-    model.add(Dense(neurons, activation=activation))
-    model.add(Dense(2, activation='softmax'))
-    
-    model.compile(optimizer=optimizer, loss=loss, metrics=['accuracy'])
-    
-    return model
-
-from keras.wrappers.scikit_learn import KerasClassifier
-
-model = KerasClassifier(build_fn=create_model, verbose=0)
-
-# neurons = [16, 64, 128, 256]
-neurons = [16]
-# batch_size = [10, 20, 50, 100]
-batch_size = [10]
-epochs = [10]
-# activation = ['relu', 'tanh', 'sigmoid', 'hard_sigmoid', 'linear', 'exponential']
-activation = ['sigmoid', 'relu']
-# optimizer = ['SGD', 'RMSprop', 'Adagrad', 'Adadelta', 'Adam', 'Adamax', 'Nadam']
-optimizer = ['SGD', 'Adadelta']
-loss = ['squared_hinge']
-
-param_grid = dict(neurons=neurons, batch_size=batch_size, epochs=epochs, activation=activation, optimizer=optimizer, loss=loss)
-
-grid = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=-1)
-grid_result = grid.fit(x_train, y_train)
-
-print("Best: %f using %s" % (grid_result.best_score_, grid_result.best_params_))
-means = grid_result.cv_results_['mean_test_score']
-stds = grid_result.cv_results_['std_test_score']
-params = grid_result.cv_results_['params']
-for mean, stdev, param in zip(means, stds, params):
-    print("%f (%f) with: %r" % (mean, stdev, param))
-
 """### Guardar modelo"""
 
 import joblib
-from sklearn.metrics import r2_score
 
-def best_model(M1, M2, M3):
-  score_1 = r2_score(y_test, y_ranfo, multioutput='variance_weighted')
-  score_2 = r2_score(y_test, y_multirf, multioutput='variance_weighted')
-  score_3 = r2_score(y_test, y_pred, multioutput='variance_weighted')
-  if (score_1 >= score_2) and (score_1 >= score_3): 
-      return M1
-  
-  elif (score_2 >= score_1) and (score_2 >= score_3): 
-      return M2
-  else: 
-      return M3
-
-filename = 'bestFitModel.sav'
-best_fit = best_model(regr_rf, regr_multirf, k_neighbor)
+filename = 'LatitudLonguitudF.sav'
+best_fit = gridF
 
 joblib.dump(best_fit, filename)
 
@@ -248,7 +198,10 @@ print(y_loadp)
 
 loaded_model.predict([[12321,70,121]])
 
-"""## Modelo de predicción de magnitud y profundidad"""
+"""## Modelo de predicción de magnitud y profundidad
+
+Así como el primer modelo se hace uso de los registros de MARN, pero con un enfoque distinto. El objetivo de este modelo es determinar si a través de una fecha y coordenadas es posible encontrar un comportamiento de dependencia para la profundidad y magnitud de un terremoto.
+"""
 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
@@ -258,7 +211,7 @@ y = final_data[['Magnitud', 'Profundidad (km)']]
 
 
 # Sacar las variables dividiendolos datos
-x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.80, test_size=0.20, random_state=4)
+x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.80, test_size=0.20, random_state=0)
 max_depth = 30
 
 print(x_train.shape, x_test.shape, y_train.shape, x_test.shape)
@@ -267,10 +220,17 @@ print(x_train.shape, x_test.shape, y_train.shape, x_test.shape)
 
 from sklearn.ensemble import RandomForestRegressor
 
-regr_rf = RandomForestRegressor(n_estimators=1000, max_depth=max_depth,
-                                random_state=2)
+regr_rf = RandomForestRegressor(random_state=8, max_depth=max_depth)
 regr_rf.fit(x_train, y_train)
-y_ranfo = regr_rf.predict(x_test)
+
+from sklearn.model_selection import GridSearchCV
+
+parameters = {'n_estimators':[10, 20, 50, 70, 120]}
+
+grid_obj = GridSearchCV(regr_rf, parameters)
+grid_fit = grid_obj.fit(x_train, y_train)
+best_fit = grid_fit.best_estimator_
+y_ranfo = best_fit.predict(x_test)
 
 r2_score(y_test, y_ranfo, multioutput='variance_weighted')
 
@@ -278,7 +238,7 @@ r2_score(y_test, y_ranfo, multioutput='variance_weighted')
 
 from sklearn.multioutput import MultiOutputRegressor
 
-regr_multirf = MultiOutputRegressor(RandomForestRegressor(n_estimators=1000,max_depth=max_depth,random_state=0))
+regr_multirf = MultiOutputRegressor(RandomForestRegressor(n_estimators=70,max_depth=max_depth,random_state=0))
 regr_multirf.fit(x_train, y_train)
 y_multirf = regr_multirf.predict(x_test)
 
@@ -289,7 +249,7 @@ r2_score(y_test, y_multirf, multioutput='variance_weighted')
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.datasets import make_regression
 
-x, y = make_regression(n_samples=1000, n_features=10, n_informative=5, n_targets=2, random_state=1)
+x, y = make_regression(n_samples=70, n_features=10, n_informative=5, n_targets=2, random_state=1)
 k_neighbor = KNeighborsRegressor()
 k_neighbor.fit(x_train, y_train)
 y_pred = k_neighbor.predict(x_test)
@@ -313,7 +273,7 @@ def best_model(M1, M2, M3):
   else: 
       return M3
 
-filename = 'bestFitModel.sav'
+filename = 'LatitudLonguitud.sav'
 best_fit = best_model(regr_rf, regr_multirf, k_neighbor)
 
 joblib.dump(best_fit, filename)
@@ -323,8 +283,6 @@ y_loadp = loaded_model.predict(x_test)
 print(y_loadp)
 
 loaded_model.predict([[12321,70,121]])
-
-"""## Modelo de predicción de fecha"""
 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
@@ -336,8 +294,6 @@ y = final_data[['Timestamp']]
 x_train, x_test, y_train, y_test = train_test_split(x, y.values.ravel(), train_size=0.80, test_size=0.20, random_state=4)
 
 print(x_train.shape, x_test.shape, y_train.shape, x_test.shape)
-
-"""### LinearRegression"""
 
 import statsmodels.api as sm 
 model = sm.OLS(y_train, x_train).fit() 
