@@ -5,7 +5,8 @@
   "imageSize": 100,
   "commit": false,
   "contributors": [
-    {"login": "00099216",
+    {
+      "login": "00099216",
       "name": "Andres",
       "avatar_url": "https://avatars2.githubusercontent.com/u/32801207?v=4",
       "profile": "https://github.com/00099216",
@@ -20,6 +21,15 @@
       "profile": "http://vsco.co/nelsoncaastro",
       "contributions": [
         "doc",
+        "design"
+      ]
+    },
+    {
+      "login": "henrybanchon3",
+      "name": "Henry Banchón",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/37353324?v=4",
+      "profile": "https://github.com/henrybanchon3",
+      "contributions": [
         "design"
       ]
     }
