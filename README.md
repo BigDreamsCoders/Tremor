@@ -1,7 +1,8 @@
-
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![Heroku](https://heroku-badge.herokuapp.com/?app=tremorsv)](#heroku-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
+
 <p align="center">
   <a href="https://tremorsv.herokuapp.com/" target="blank"><img src="https://github.com/BigDreamsCoders/Tremor/blob/master/static/img/Logo%2BNombre.svg" width="500" alt="Tremor SV" /></a>
 </p>
@@ -31,6 +32,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/00099216"><img src="https://avatars2.githubusercontent.com/u/32801207?v=4" width="100px;" alt=""/><br /><sub><b>Andres</b></sub></a><br /><a href="https://github.com/BigDreamsCoders/Tremor/commits?author=00099216" title="Documentation">📖</a> <a href="https://github.com/BigDreamsCoders/Tremor/pulls?q=is%3Apr+reviewed-by%3A00099216" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="http://vsco.co/nelsoncaastro"><img src="https://avatars3.githubusercontent.com/u/31757457?v=4" width="100px;" alt=""/><br /><sub><b>Nelson Castro</b></sub></a><br /><a href="https://github.com/BigDreamsCoders/Tremor/commits?author=nelsoncaastro" title="Documentation">📖</a> <a href="#design-nelsoncaastro" title="Design">🎨</a></td>
+    <td align="center"><a href="https://github.com/henrybanchon3"><img src="https://avatars2.githubusercontent.com/u/37353324?v=4" width="100px;" alt=""/><br /><sub><b>Henry Banchón</b></sub></a><br /><a href="#design-henrybanchon3" title="Design">🎨</a></td>
+    <td align="center"><a href="https://github.com/TheAlexBig"><img src="https://avatars3.githubusercontent.com/u/32801195?v=4" width="100px;" alt=""/><br /><sub><b>José Valladares</b></sub></a><br /><a href="https://github.com/BigDreamsCoders/Tremor/commits?author=TheAlexBig" title="Code">💻</a></td>
+    <td align="center"><a href="http://pedrogas.me"><img src="https://avatars2.githubusercontent.com/u/31825365?v=4" width="100px;" alt=""/><br /><sub><b>Pedro Gómez</b></sub></a><br /><a href="https://github.com/BigDreamsCoders/Tremor/commits?author=petrlr14" title="Code">💻</a> <a href="#infra-petrlr14" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
   </tr>
 </table>
 
