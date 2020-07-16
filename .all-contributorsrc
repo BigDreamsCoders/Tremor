@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "nelsoncaastro",
+      "name": "Nelson Castro",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/31757457?v=4",
+      "profile": "http://vsco.co/nelsoncaastro",
+      "contributions": [
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "Tremor",
+  "projectOwner": "BigDreamsCoders",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
