@@ -70,7 +70,7 @@ document.getElementById('toggle').addEventListener('change', (e) => {
         submitButton.innerText = "Obtener posible epicentro"
     } else {
         submitButton.style.backgroundColor = "#dc3545"
-        submitButton.innerText = "Obtener nube de episentros"
+        submitButton.innerText = "Obtener nube de epicentros"
     }
 
 })
