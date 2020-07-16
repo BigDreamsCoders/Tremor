@@ -29,7 +29,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="http://vsco.co/nelsoncaastro"><img src="https://avatars3.githubusercontent.com/u/31757457?v=4" width="100px;" alt=""/><br /><sub><b>Nelson Castro</b></sub></a><br /><a href="https://github.com/BigDreamsCoders/Tremor/commits?author=nelsoncaastro" title="Documentation">📖</a></td>
+    <td align="center"><a href="http://vsco.co/nelsoncaastro"><img src="https://avatars3.githubusercontent.com/u/31757457?v=4" width="100px;" alt=""/><br /><sub><b>Nelson Castro</b></sub></a><br /><a href="https://github.com/BigDreamsCoders/Tremor/commits?author=nelsoncaastro" title="Documentation">📖</a> <a href="#design-nelsoncaastro" title="Design">🎨</a></td>
   </tr>
 </table>
 
