@@ -4,7 +4,18 @@
   ],
   "imageSize": 100,
   "commit": false,
-  "contributors": [],
+  "contributors": [
+    {
+      "login": "nelsoncaastro",
+      "name": "Nelson Castro",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/31757457?v=4",
+      "profile": "http://vsco.co/nelsoncaastro",
+      "contributions": [
+        "doc",
+        "design"
+      ]
+    }
+  ],
   "contributorsPerLine": 7,
   "projectName": "Tremor",
   "projectOwner": "BigDreamsCoders",
