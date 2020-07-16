@@ -15,6 +15,10 @@
     ></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script src="https://kit.fontawesome.com/248332ce05.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/css/bootstrap-switch-button.min.css"
+          rel="stylesheet">
     <link
             rel="stylesheet"
             href="{{ url_for('static', filename='css/main.css') }}"
@@ -29,6 +33,13 @@
                        speed="1"
                        style="width: 300px; height: 300px;" loop autoplay></lottie-player>
     </div>
+</div>
+<div class="toggle-container" >
+    <input id="toggle" type="checkbox" data-toggle="switchbutton" checked data-onlabel="Punto" data-offlabel="Nube"
+           data-onstyle="success" data-offstyle="danger">
+</div>
+<div class="tutorial" >
+    <i id="tutorial" class="fas fa-question-circle"></i>
 </div>
 <div class="container">
     <div class="logo">
@@ -67,7 +78,7 @@
             </select>
         </div>
         <div class="input-group">
-            <button id="submit" class="btn">Obtener posibles epicentros</button>
+            <button id="submit" class="btns submit">Obtener posibles epicentros</button>
         </div>
     </div>
     <div id="map-wrapper">
@@ -75,7 +86,8 @@
         <button id="clear"><i class="fas fa-broom"></i></button>
     </div>
 </div>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/dist/bootstrap-switch-button.min.js"></script>
 <script
         type="text/javascript"
         src="{{ url_for('static', filename='js/main.js') }}"
