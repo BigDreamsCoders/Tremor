@@ -18,14 +18,35 @@
 }
 
 .loader {
-    width: 400px;
-    height: 400px;
+    width: 300px;
+    height: 320px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: white;
-    border: 12px solid red;
+    border: 12px solid #dc3545;
+}
+.swal-modal{
+ z-index: 1000000000000000;
+}
+
+.toggle-container {
+    position: absolute;
+    top: 3em;
+    right: 1em;
+    z-index: 10000;
+}
+.tutorial{
+    position: absolute;
+    top: 3em;
+    left: 1em;
+    z-index: 10000;
+    font-size: 1.7em;
+    color: #b4b2b2;
+}
+#tutorial{
+    cursor: pointer;
 }
 
 .container {
@@ -78,17 +99,22 @@
 
 .input-group > input:focus, .input-group > select:focus {
     outline: none !important;
-    border-color: red;
+    border-color: #dc3545;
 }
 
-.btn {
+.btns {
     border: 2px solid #541313;
     border-radius: 6px;
     height: 3em;
     color: white;
     font-size: 1.2em;
-    background-color: red;
+    background-color: #dc3545;
 }
+.submit{
+    background-color: #28a745;
+    transition: all .2s ease-in-out;
+}
+
 
 #map-wrapper {
     height: 500px;
@@ -109,12 +135,12 @@
     position: absolute;
     width: 40px;
     height: 40px;
-    background-color: red;
+    background-color: #dc3545;
     border: 2px solid #930a0a;
     border-radius: 10px;
     color: white;
     font-size: 1.4em;
-    z-index: 10000000000000000000000000
+    z-index: 10000
 }
 
 #msg {
@@ -124,5 +150,5 @@
 }
 
 #msg > i {
-    color: red;
+    color: #dc3545;
 }
