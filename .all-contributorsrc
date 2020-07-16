@@ -6,6 +6,16 @@
   "commit": false,
   "contributors": [
     {
+      "login": "00099216",
+      "name": "Andres",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/32801207?v=4",
+      "profile": "https://github.com/00099216",
+      "contributions": [
+        "doc",
+        "review"
+      ]
+    },
+    {
       "login": "nelsoncaastro",
       "name": "Nelson Castro",
       "avatar_url": "https://avatars3.githubusercontent.com/u/31757457?v=4",
@@ -14,6 +24,34 @@
         "doc",
         "design",
         "review"
+      ]
+    },
+    {
+      "login": "henrybanchon3",
+      "name": "Henry Banchón",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/37353324?v=4",
+      "profile": "https://github.com/henrybanchon3",
+      "contributions": [
+        "design"
+      ]
+    },
+    {
+      "login": "TheAlexBig",
+      "name": "José Valladares",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/32801195?v=4",
+      "profile": "https://github.com/TheAlexBig",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "petrlr14",
+      "name": "Pedro Gómez",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/31825365?v=4",
+      "profile": "http://pedrogas.me",
+      "contributions": [
+        "code",
+        "infra"
       ]
     }
   ],
