@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "00099216",
+      "name": "Andres",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/32801207?v=4",
+      "profile": "https://github.com/00099216",
+      "contributions": [
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "Tremor",
+  "projectOwner": "BigDreamsCoders",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
