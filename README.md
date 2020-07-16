@@ -1,6 +1,6 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 <p align="center">
   <a href="https://tremorsv.herokuapp.com/" target="blank"><img src="https://github.com/BigDreamsCoders/Tremor/blob/master/static/img/Logo%2BNombre.svg" width="500" alt="Tremor SV" /></a>
@@ -29,6 +29,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
+    <td align="center"><a href="https://github.com/00099216"><img src="https://avatars2.githubusercontent.com/u/32801207?v=4" width="100px;" alt=""/><br /><sub><b>Andres</b></sub></a><br /><a href="https://github.com/BigDreamsCoders/Tremor/commits?author=00099216" title="Documentation">📖</a> <a href="https://github.com/BigDreamsCoders/Tremor/pulls?q=is%3Apr+reviewed-by%3A00099216" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="http://vsco.co/nelsoncaastro"><img src="https://avatars3.githubusercontent.com/u/31757457?v=4" width="100px;" alt=""/><br /><sub><b>Nelson Castro</b></sub></a><br /><a href="https://github.com/BigDreamsCoders/Tremor/commits?author=nelsoncaastro" title="Documentation">📖</a> <a href="#design-nelsoncaastro" title="Design">🎨</a></td>
   </tr>
 </table>
