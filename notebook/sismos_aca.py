@@ -24,7 +24,6 @@ print('done')
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 import pandas as pd
-import pylab as pl
 import numpy as np
 
 #Se usa de un archivo de Excel que se encuentra en nuestro drive
@@ -33,7 +32,8 @@ drive.mount('/content/drive')
 
 # %matplotlib inline
 
-"""Actualmente el equipo genero el csv. Este se baso en extraer información del SIG de sismos de MARM, realizando una consulta HTTP especificando la extraccción de datos registrados desde 2010 al presente día.
+"""## 1. Lectura de registros
+Actualmente el equipo genero el csv. Este se baso en extraer información del SIG de sismos de MARM, realizando una consulta HTTP especificando la extraccción de datos registrados desde 2010 al presente día.
 
 El [SIG](http://mapas.snet.gob.sv/geologia/sismicidad.phtml) útilizado proporciona información publica por lo que ha sido anexado para futura referencia
 """
@@ -49,13 +49,13 @@ for idx, row in df.iterrows():
   if (latitud < 12 or latitud > 14.5) or (longitud < -91 or longitud > -87.5):
     df.drop(idx, inplace=True)
 
+"""## 2. Cambiar formato de fecha a texto y luego a número"""
+
 # Las fechas ingresadas son transformadas a una representación numerica con el objetivo de ser estudiadas de manera cuantitativa
 import datetime
 import time as tlib
 months = [None, "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov" , "Dic"]
 timestamp = []
-plusLon = []
-profundidadM = []
 
 def twoDigit(field):
   return field if(int(field) > 9 and len(field) > 1) else '0'+str(field)
@@ -80,6 +80,8 @@ for date, time in zip(df["Fecha"], df['Hora local']):
    
 print(timestamp)
 
+"""## 3. Limpiar la tabla de dataset"""
+
 #Agrega las columnas especiales adicionales
 timeStamp = pd.Series(timestamp)
 df['Timestamp'] = timeStamp.values
@@ -95,16 +97,16 @@ final_data.head()
 final_data = final_data.drop(['Localizacion', 'Intensidad'], axis=1)
 final_data.head()
 
+"""## 4. Mapa de actividad sísmica
+Usando los datos extraídos del mapa se han marcado con puntos azules los terremotos registrados en El Salvador. Observando el mapa es posible notar visualmente que existen zonas con gran frecuencia sísmica. Con esta información visual se conjetura que existe un patrón, casi todos los terremotos registrados se forman atravesando el país y las costas.
+"""
+
 #Prepara los datos para el mapa
 m = Basemap(projection='mill',llcrnrlat=10, llcrnrlon=-97,urcrnrlon=-83, urcrnrlat=17, resolution='l' )
 longitudes = final_data["Longitud W(°)"].tolist()
 latitudes = final_data["Latitud N(°)"].tolist()
 
 x,y = m(longitudes,latitudes)
-
-"""## Mapa de actividad sísmica
-Usando los datos extraídos del mapa se han marcado con puntos azules los terremotos registrados en El Salvador. Observando el mapa es posible notar visualmente que existen zonas con gran frecuencia sísmica. Con esta información visual se conjetura que existe un patrón, casi todos los terremotos registrados se forman atravesando el país y las costas.
-"""
 
 #Crea un mapa digital del pais y le inserta datos
 fig = plt.figure(figsize=(12,10))
@@ -116,7 +118,7 @@ m.drawmapboundary()
 m.drawcountries()
 plt.show()
 
-"""## Modelo de predicción de latitud y longuitud
+"""## 5.1. Modelo de predicción de latitud y longuitud
 Utilizando los registros proporcionados por MARN nos enfocamos en analizar un análisis para un modelo. El objetivo es determinar si a través de una fecha, magnitud y profundidad es posible encontrar un patrón o relación con las coordenadas del terremoto.
 """
 
@@ -131,7 +133,7 @@ y = final_data[['Latitud N(°)', 'Longitud W(°)']]
 x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.80, test_size=0.20, random_state=20)
 max_depth = 100
 
-print(x_train.shape, x_test.shape, y_train.shape, x_test.shape)
+print(x_train.shape, x_test.shape, y_train.shape, y_test.shape)
 
 """### RandomForestRegressor"""
 
@@ -198,7 +200,7 @@ print(y_loadp)
 
 loaded_model.predict([[12321,70,121]])
 
-"""## Modelo de predicción de magnitud y profundidad
+"""## 5.2. Modelo de predicción de magnitud y profundidad
 
 Así como el primer modelo se hace uso de los registros de MARN, pero con un enfoque distinto. El objetivo de este modelo es determinar si a través de una fecha y coordenadas es posible encontrar un comportamiento de dependencia para la profundidad y magnitud de un terremoto.
 """
@@ -214,7 +216,7 @@ y = final_data[['Magnitud', 'Profundidad (km)']]
 x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.80, test_size=0.20, random_state=0)
 max_depth = 30
 
-print(x_train.shape, x_test.shape, y_train.shape, x_test.shape)
+print(x_train.shape, x_test.shape, y_train.shape, y_test.shape)
 
 """### RandomForestRegressor"""
 
