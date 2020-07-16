@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "henrybanchon3",
+      "name": "Henry Banchón",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/37353324?v=4",
+      "profile": "https://github.com/henrybanchon3",
+      "contributions": [
+        "code",
+        "design"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "Tremor",
+  "projectOwner": "BigDreamsCoders",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
