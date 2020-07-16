@@ -41,6 +41,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "petrlr14",
+      "name": "Pedro Gómez",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/31825365?v=4",
+      "profile": "http://pedrogas.me",
+      "contributions": [
+        "code",
+        "infra"
+      ]
     }
   ],
   "contributorsPerLine": 7,
