@@ -5,13 +5,22 @@
   "imageSize": 100,
   "commit": false,
   "contributors": [
-    {
-      "login": "00099216",
+    {"login": "00099216",
       "name": "Andres",
       "avatar_url": "https://avatars2.githubusercontent.com/u/32801207?v=4",
       "profile": "https://github.com/00099216",
       "contributions": [
         "doc"
+      ]
+    },
+    {
+      "login": "nelsoncaastro",
+      "name": "Nelson Castro",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/31757457?v=4",
+      "profile": "http://vsco.co/nelsoncaastro",
+      "contributions": [
+        "doc",
+        "design"
       ]
     }
   ],
