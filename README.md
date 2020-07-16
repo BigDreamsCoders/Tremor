@@ -1,11 +1,19 @@
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Heroku](https://heroku-badge.herokuapp.com/?app=tremorsv)](#heroku-)
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-
+<p>
 <p align="center">
   <a href="https://tremorsv.herokuapp.com/" target="blank"><img src="https://github.com/BigDreamsCoders/Tremor/blob/master/static/img/Logo%2BNombre.svg" width="500" alt="Tremor SV" /></a>
 </p>
+<br/>
+<p align="center">
+  <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+  <img src="https://heroku-badge.herokuapp.com/?app=tremorsv">
+  <img src="https://img.shields.io/badge/PRs-Bienvenidos!-yellowgreen">
+  <img src="https://img.shields.io/badge/all_contributors-5-orange.svg?style=square">
+  <img src="https://img.shields.io/badge/License-Apache--2.0-blue">
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+</p>
+</p>
+
+
 <H1>Generalidades<H1>
 <H2>Herramientas y licencias<H2>
   <H5>Flask <br>
