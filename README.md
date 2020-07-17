@@ -15,18 +15,20 @@
 
 
 
-## Generalidades
-### Herramientas y licencias
-  #### Flask
+## Generalidades ⚙️
+### Herramientas y licencias 🛠
+  #### [Flask](https://flask.palletsprojects.com/en/1.1.x/) 🐍
    Es un framework minimalista escrito en Python que permite crear aplicaciones web rápidamente y con un mínimo número de líneas de código. Está basado en la especificación WSGI de Werkzeug y el motor de templates Jinja2.<br>
-   licencia: BSD 
-   #### Leaflet
+   licencia: <strong>BSD</strong> 
+   
+   #### [Leaflet](https://leafletjs.com/) 🗺
   Es una biblioteca JavaScript de código abierto ampliamente utilizada para crear aplicaciones de mapeo web. Lanzado por primera vez en 2011, es compatible con la mayoría de las plataformas móviles y de escritorio, compatible con HTML5 y CSS3.<br>
- Licencia: BSD-2-Clause
+ Licencia: <strong>BSD-2-Clause</strong>
   
-  #### Kaggle
+  #### Kaggle 🦆
    Es una subsidiaria de Google LLC, es una comunidad en línea de científicos de datos y profesionales del aprendizaje automático.<br>
-   Licencia: Apache 2.0
+   El notebook que utilizamos lo puedes encontrar <a target="_blank" href="https://www.kaggle.com/mahadevmm9/earthquake-prediction">aquí</a>.<br/>
+   Licencia: <strong>Apache 2.0</strong>
     
 
 ## Contribuidores ✨
