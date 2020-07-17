@@ -1,42 +1,42 @@
-<p>
 <p align="center">
-  <a href="https://tremorsv.herokuapp.com/" target="blank"><img src="https://github.com/BigDreamsCoders/Tremor/blob/master/static/img/Logo%2BNombre.svg" width="500" alt="Tremor SV" /></a>
-</p>
-<br/>
-<p align="center">
-  <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-  <img src="https://heroku-badge.herokuapp.com/?app=tremorsv">
-  <img src="https://img.shields.io/badge/PRs-Bienvenidos!-yellowgreen">
-  <img src="https://img.shields.io/badge/all_contributors-5-orange.svg?style=square">
-  <img src="https://img.shields.io/badge/License-Apache--2.0-blue">
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-</p>
+    <span>
+      <a href="https://tremorsv.herokuapp.com/" target="blank"><img src="https://github.com/BigDreamsCoders/Tremor/blob/master/static/img/Logo%2BNombre.svg" width="500" alt="Tremor SV" /></a>
+    </span>
+    <br/>
+    <span>
+      <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+      <img alt="" src="https://heroku-badge.herokuapp.com/?app=tremorsv">
+      <img alt="" src="https://img.shields.io/badge/PRs-Bienvenidos!-yellowgreen">
+      <img alt="" src="https://img.shields.io/badge/all_contributors-5-orange.svg?style=square">
+      <img alt="" src="https://img.shields.io/badge/License-Apache--2.0-blue">
+    <!-- ALL-CONTRIBUTORS-BADGE:END -->
+    </span>
 </p>
 
 
-<H1>Generalidades<H1>
-<H2>Herramientas y licencias<H2>
-  <H5>Flask <br>
-    Es un framework minimalista escrito en Python que permite crear aplicaciones web rápidamente y con un mínimo número de líneas de código. Está basado en la especificación WSGI de Werkzeug y el motor de templates Jinja2.<br>
-     licencia: BSD
-    <H5> 
-   <H5>Leaflet<br>
+
+## Generalidades
+### Herramientas y licencias
+  #### Flask
+   Es un framework minimalista escrito en Python que permite crear aplicaciones web rápidamente y con un mínimo número de líneas de código. Está basado en la especificación WSGI de Werkzeug y el motor de templates Jinja2.<br>
+   licencia: BSD 
+   #### Leaflet
   Es una biblioteca JavaScript de código abierto ampliamente utilizada para crear aplicaciones de mapeo web. Lanzado por primera vez en 2011, es compatible con la mayoría de las plataformas móviles y de escritorio, compatible con HTML5 y CSS3.<br>
  Licencia: BSD-2-Clause
-  <H5>
-  <H5>Kaggle<br>
-    Es una subsidiaria de Google LLC, es una comunidad en línea de científicos de datos y profesionales del aprendizaje automático.<br>
-    Licencia: Apache 2.0
+  
+  #### Kaggle
+   Es una subsidiaria de Google LLC, es una comunidad en línea de científicos de datos y profesionales del aprendizaje automático.<br>
+   Licencia: Apache 2.0
     
 
-## Contributors ✨
+## Contribuidores ✨
 
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+Agradecimientos a estas personas ♥️ ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
-<table>
+<table align="center">
   <tr>
     <td align="center"><a href="https://github.com/henrybanchon3"><img src="https://avatars2.githubusercontent.com/u/37353324?v=4" width="100px;" alt=""/><br /><sub><b>Henry Banchón</b></sub></a><br /><a href="#design-henrybanchon3" title="Design">🎨</a> <a href="https://github.com/BigDreamsCoders/Tremor/pulls?q=is%3Apr+reviewed-by%3Ahenrybanchon3" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="http://vsco.co/nelsoncaastro"><img src="https://avatars3.githubusercontent.com/u/31757457?v=4" width="100px;" alt=""/><br /><sub><b>Nelson Castro</b></sub></a><br /><a href="https://github.com/BigDreamsCoders/Tremor/commits?author=nelsoncaastro" title="Documentation">📖</a> <a href="#design-nelsoncaastro" title="Design">🎨</a> <a href="https://github.com/BigDreamsCoders/Tremor/pulls?q=is%3Apr+reviewed-by%3Anelsoncaastro" title="Reviewed Pull Requests">👀</a></td>
@@ -50,5 +50,5 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+Este proyecto sigue las especificaciones de [all-contributors](https://github.com/all-contributors/all-contributors). Cualquier tipo de contribuciones son bienvenidas!
 
