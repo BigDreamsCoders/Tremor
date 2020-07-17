@@ -25,7 +25,7 @@
   Es una biblioteca JavaScript de código abierto ampliamente utilizada para crear aplicaciones de mapeo web. Lanzado por primera vez en 2011, es compatible con la mayoría de las plataformas móviles y de escritorio, compatible con HTML5 y CSS3.<br>
  Licencia: <strong>BSD-2-Clause</strong>
   
-  #### Kaggle 🦆
+  #### [Kaggle](https://www.kaggle.com/) 🦆
    Es una subsidiaria de Google LLC, es una comunidad en línea de científicos de datos y profesionales del aprendizaje automático.<br>
    El notebook que utilizamos lo puedes encontrar <a target="_blank" href="https://www.kaggle.com/mahadevmm9/earthquake-prediction">aquí</a>.<br/>
    Licencia: <strong>Apache 2.0</strong>
