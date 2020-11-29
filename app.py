@@ -1,20 +1,14 @@
+from dotenv import load_dotenv
+
 import csv
 import math
-
 import joblib
 from flask import (Flask, jsonify, render_template, request)
+from src.database import getSismosPoints
 
 app = Flask(__name__)
 app.modelLatitudLongitud = joblib.load('static/LatitudLonguitud.sav')
 app.modelMagnitudProfundidad = joblib.load('static/MagnitudProfundidad.sav')
-
-
-class Point:
-    def __init__(self, lat, lng, mag, depth):
-        self.lat = lat
-        self.lng = lng
-        self.mag = mag
-        self.depth = depth
 
 
 @app.route('/')
@@ -67,6 +61,14 @@ def latlng():
     )
     return jsonify([d[0][0], d[0][1]])
 
+@app.route('/test')
+def test():
+    data = getSismosPoints()
+    return jsonify(data)
+
 
 if __name__ == '__main__':
+    app.modelLatitudLongitud = joblib.load('static/LatitudLonguitud.sav')
+    app.modelMagnitudProfundidad = joblib.load('static/MagnitudProfundidad.sav')
+    load_dotenv()
     app.run(debug=True,host='0.0.0.0')
