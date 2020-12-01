@@ -33,51 +33,27 @@
       href="{{ url_for('static', filename='css/main.css') }}"
     />
     <link rel="icon" href="{{ url_for('static',filename='/img/Logo.ico') }}" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+  
+            
     <title>Tremor</title>
   </head>
   <body>
-    <div id="loader-container" class="loader-container">
-      <div class="loader">
-        <lottie-player
-          src="{{ url_for('static',filename='animations/loading.json') }}"
-          background="transparent"
-          speed="1"
-          style="width: 300px; height: 300px"
-          loop
-          autoplay
-        ></lottie-player>
-      </div>
-    </div>
-    <div class="toggle-container">
-      <input
-        id="toggle"
-        type="checkbox"
-        data-toggle="switchbutton"
-        checked
-        data-onlabel="Punto"
-        data-offlabel="Nube"
-        data-onstyle="success"
-        data-offstyle="danger"
-      />
-    </div>
-    <div class="tutorial">
-      <i id="tutorial" class="fas fa-question-circle"></i>
-    </div>
-    <div class="container">
-      <div class="logo">
-        <img
-          alt="Mapa de El Salvador con una señal que marca la magnitud de un sismo"
-          src="{{ url_for('static',filename='img/Logo+Nombre.png') }}"
-        />
-      </div>
-      <div class="inputs">
-        <div class="input-group">
-          <label for="date">Fecha y Hora</label>
-          <input type="datetime-local" id="date" />
+
+    <div id="modalPunto" class="modal">
+      <div class="modal-content">
+        <div>
+          <label for="date-punto">Fecha y Hora</label>
+          <input class="date" type="datetime-local" id="date-punto" />
         </div>
-        <div class="input-group">
-          <label for="magnitude">Magnitud (Escala Richter)</label>
-          <select id="magnitude">
+        <div>
+          <label for="magnitude-punto">Magnitud (Escala Richter)</label>
+          <select id="magnitude-punto">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -90,9 +66,9 @@
             <option value="10">10</option>
           </select>
         </div>
-        <div class="input-group">
-          <label for="depth">Profundidad (Km)</label>
-          <select id="depth">
+        <div>
+          <label for="depth-punto" value="25">Profundidad (Km)</label>
+          <select id="depth-punto" value="25">
             <option value="15">15</option>
             <option value="20">20</option>
             <option value="25">25</option>
@@ -101,18 +77,91 @@
             <option value="40">40</option>
           </select>
         </div>
-        <div class="input-group">
-          <button id="submit" class="btns submit">
-            Obtener posible epicentro
-          </button>
-          <button id="heat" class="btns submit">Mapa de calor</button>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" id="submitPunto" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+      </div>
+    </div>
+
+    <div id="modalNube" class="modal">
+      <div class="modal-content">
+        <div>
+          <label for="date-nube">Fecha y Hora</label>
+          <input class="date" type="datetime-local" id="date-nube" />
+        </div>
+        <div>
+          <label for="magnitude-nube">Magnitud (Escala Richter)</label>
+          <select id="magnitude-nube">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+        <div>
+          <label for="depth-nube" value="25">Profundidad (Km)</label>
+          <select id="depth-nube" value="25">
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+            <option value="30">30</option>
+            <option value="35">35</option>
+            <option value="40">40</option>
+          </select>
         </div>
       </div>
-      <div id="map-wrapper">
+      <div class="modal-footer">
+        <a href="#!" id="submitNube" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+      </div>
+    </div>
+
+    <div id="loader-container" class="loader-container">
+      <div class="loader">
+        <lottie-player
+          src="{{ url_for('static',filename='animations/loading.json') }}"
+          background="transparent"
+          speed="1"
+          style="width: 300px; height: 300px"
+          loop
+          autoplay
+        ></lottie-player>
+      </div>
+    </div>
+    <div class="tutorial">
+      <i id="tutorial" class="fas fa-question-circle"></i>
+    </div>
+    <div>
+      <div class="logo">
+        <img
+          alt="Mapa de El Salvador con una señal que marca la magnitud de un sismo"
+          src="{{ url_for('static',filename='img/Logo+Nombre.png') }}"
+        />
+      </div>
+        <div>
+          <div class="fixed-action-btn toolbar">
+            <a class="btn-floating btn-large">
+              <i class="material-icons"  style="font-size:45px;" >explore</i>
+            </a>
+            <ul>
+             
+              <li><a data-target="modalPunto" class="btn-floating tooltipped modal-trigger"  data-position="top" data-tooltip="Obtener posible epicentro"><i class="material-icons" style="font-size:35px;">add_location</i></a></li>
+              <li><a data-target="modalNube" class="btn-floating tooltipped modal-trigger" data-position="top" data-tooltip="Obtener nube de puntos"><i class="material-icons" style="font-size:35px;">grain</i></a></li>
+              <li><a id="heat" class="btn-floating tooltipped" data-position="top" data-tooltip="Mapa de calor"><i class="material-icons" style="font-size:35px;" >whatshot</i></a></li>
+            </ul>
+          </div>
+        </div>
+      <div class="map-wrapper">
         <div id="mapid"></div>
         <button id="clear"><i class="fas fa-broom"></i></button>
       </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/dist/bootstrap-switch-button.min.js"></script>
     <script

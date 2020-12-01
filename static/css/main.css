@@ -49,7 +49,7 @@
     cursor: pointer;
 }
 
-.container {
+.containerr {
     width: 100vw;
     max-width: 100vw;
     height: 100vh;
@@ -69,7 +69,7 @@
     width: 300px;
 }
 
-.inputs {
+.inputss {
     margin: 0 auto;
     padding: 1em 0;
     width: 80%;
@@ -78,6 +78,8 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    position: absolute;
+    z-index: 10000
 }
 
 .input-group {
@@ -116,12 +118,9 @@
 }
 
 
-#map-wrapper {
-    height: 500px;
-    width: 80%;
-    margin: 0 auto;
-    border: 3px solid #cbb8b8;
-    position: relative;
+.map-wrapper {
+    height: 100vh;
+    width: 100vw;
 }
 
 #mapid {

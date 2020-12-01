@@ -22,8 +22,8 @@ def magdepth():
     timestamp = args.get("timestamp")
     mag = int(args.get("magnitude"))
     depth = int(args.get("depth"))
-    with open('static/Sismos-el-salvador.csv') as csv_file:
-        data = csv.reader(csv_file, )
+    with open('static/Sismos-el-salvador.csv', encoding='utf8') as csv_file:
+        data = csv.reader(csv_file)
         first_line = True
         points = []
         for row in data:

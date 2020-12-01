@@ -1,17 +1,21 @@
 const date = new Date();
 const fullDate = date.toISOString().split('T')[0];
 const hour = date.toLocaleTimeString().slice(0, -3);
-document.querySelector('#date').value = `${fullDate}T${
-  hour.length === 4 ? `0${hour}` : hour
-}`;
+[...document.querySelectorAll('.date')].map((dateInput)=>{
+  dateInput.value = `${fullDate}T${
+    hour.length === 4 ? `0${hour}` : hour
+  }`;
+})
+
 const loader = document.querySelector('#loader-container');
-const submitButton = document.querySelector('#submit');
+const submitButtonPunto = document.querySelector('#submitPunto');
+const submitNube = document.querySelector('#submitNube');
+
 const markers = [];
-let checked = true;
 
 const mymap = L.map('mapid', {
-  scrollWheelZoom: false,
-  zoomControl: false,
+  scrollWheelZoom: true,
+  zoomControl: true,
 }).setView([13.8333, -88.9167], 8);
 
 L.tileLayer(
@@ -25,32 +29,62 @@ L.tileLayer(
   }
 ).addTo(mymap);
 
-submitButton.addEventListener('click', async () => {
-  const dateElement = document.querySelector('#date').value;
-  if (dateElement === '') {
-    swal({
-      title: 'Campos faltantes',
-      text: 'Debes seleccionar la fecha de la aproximación!',
-      icon: 'warning',
-    });
-    return;
-  }
+document.addEventListener('DOMContentLoaded', function() {
+  const elems = document.querySelectorAll('.fixed-action-btn');
+  const instances = M.FloatingActionButton.init(elems, {
+    toolbarEnabled: true
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const elems = document.querySelectorAll('.tooltipped');
+  const instances = M.Tooltip.init(elems, {enterDelay:500});
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const elems = document.querySelectorAll('.modal');
+  const instances = M.Modal.init(elems, {});
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const elems = document.querySelectorAll('select');
+  const instances = M.FormSelect.init(elems, {});
+});
+
+submitButtonPunto.addEventListener('click', async () => {
+  const dateElement = document.querySelector('#date-punto').value;
   const date = new Date(dateElement).getTime();
-  const magnitudeElement = document.querySelector('#magnitude');
-  const depthElement = document.querySelector('#depth');
+  const magnitudeElement = document.querySelector('#magnitude-punto');
+  const depthElement = document.querySelector('#depth-punto');
   const magnitude =
     magnitudeElement.options[magnitudeElement.selectedIndex].value;
   const depth = depthElement.options[depthElement.selectedIndex].value;
 
   loader.style.visibility = 'visible';
   setTimeout(async () => {
-    if (checked) {
-      const [lat, lng] = await fetchPointData(date, magnitude, depth);
+  
+      const [lat, lng] = await fetchPointData(date, magnitude, depth, true);
       const marker = L.marker([Number(lat), Number(lng)]).addTo(mymap);
       markers.push(marker);
-      loader.style.visibility = 'hidden';
-    } else {
-      const array = await fetchPointData(date, magnitude, depth);
+      loader.style.visibility = 'hidden'; 
+  }, 500);
+});
+
+submitNube.addEventListener('click', async () => {
+
+  const dateElement = document.querySelector('#date-nube').value;
+  const date = new Date(dateElement).getTime();
+  const magnitudeElement = document.querySelector('#magnitude-nube');
+  const depthElement = document.querySelector('#depth-nube');
+  const magnitude =
+    magnitudeElement.options[magnitudeElement.selectedIndex].value;
+  const depth = depthElement.options[depthElement.selectedIndex].value;
+
+  loader.style.visibility = 'visible';
+
+  setTimeout(async () => { 
+
+      const array = await fetchPointData(date, magnitude, depth, false);
       array.forEach(({ depth, lat, lng, mag }) => {
         const marker = L.marker([Number(lat), Number(lng)]).addTo(mymap);
         const strDepth = `${depth}`.slice(0, 5);
@@ -60,8 +94,7 @@ submitButton.addEventListener('click', async () => {
         );
         markers.push(marker);
       });
-      loader.style.visibility = 'hidden';
-    }
+      loader.style.visibility = 'hidden';  
   }, 500);
 });
 
@@ -69,17 +102,6 @@ document.querySelector('#clear').addEventListener('click', () => {
   markers.forEach((mark) => {
     mark.remove();
   });
-});
-
-document.getElementById('toggle').addEventListener('change', (e) => {
-  checked = e.target.checked;
-  if (checked) {
-    submitButton.style.backgroundColor = '#28a745';
-    submitButton.innerText = 'Obtener posible epicentro';
-  } else {
-    submitButton.style.backgroundColor = '#dc3545';
-    submitButton.innerText = 'Obtener nube de epicentros';
-  }
 });
 
 document.querySelector('#tutorial').addEventListener('click', () => {
@@ -96,7 +118,7 @@ document.querySelector('#heat').addEventListener('click', () => {
   showHeatMap();
 });
 
-const fetchPointData = async (timestamp, magnitude, depth) => {
+const fetchPointData = async (timestamp, magnitude, depth, checked) => {
   const query = `timestamp=${timestamp}&magnitude=${magnitude}&depth=${depth}`;
   const response = await fetch(`${checked ? 'latitud' : 'magnitud'}?${query}`);
   return await response.json();
@@ -110,9 +132,8 @@ const fetchHeatData = async () => {
 const showHeatMap = async () => {
   const data = await fetchHeatData();
   L.heatLayer(
-    data.map(({ count, lat, lgn }) => {
-      console.log(count, lat, lgn);
-      return [lat, lgn, count * 0.8];
-    })
+    data.map(({ magn, lat, lgn }) => {
+      return [lat, lgn, 5];
+    }), {radius:25}
   ).addTo(mymap);
 };
