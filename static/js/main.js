@@ -1,21 +1,28 @@
-const date = new Date();
-const fullDate = date.toISOString().split('T')[0];
-const hour = date.toLocaleTimeString().slice(0, -3);
-[...document.querySelectorAll('.date')].map((dateInput)=>{
-  dateInput.value = `${fullDate}T${
-    hour.length === 4 ? `0${hour}` : hour
-  }`;
-})
+const nowDate = new Date();
+const fullDate = nowDate.toISOString().split('T')[0];
+const hour = nowDate.toLocaleTimeString().slice(0, -3);
+[...document.querySelectorAll('.date')].map((dateInput) => {
+  dateInput.value = `${fullDate}T${hour.length === 4 ? `0${hour}` : hour}`;
+});
 
 const loader = document.querySelector('#loader-container');
-const submitButtonPunto = document.querySelector('#submitPunto');
-const submitNube = document.querySelector('#submitNube');
+const submitButtonPunto = document.querySelector('#submit-punto');
+const submitNube = document.querySelector('#submit-nube');
+const zoomIn = document.querySelector('#zoom-in');
+const zoomOut = document.querySelector('#zoom-out');
+const clear = document.querySelector('#clear');
+const center = document.querySelector('#center');
+const tutorial = document.querySelector('#tutorial');
+const montain = document.querySelector('#montain');
+
+let heatMap = undefined;
+let volcanes = undefined;
 
 const markers = [];
 
 const mymap = L.map('mapid', {
   scrollWheelZoom: true,
-  zoomControl: true,
+  zoomControl: false,
 }).setView([13.8333, -88.9167], 8);
 
 L.tileLayer(
@@ -29,26 +36,34 @@ L.tileLayer(
   }
 ).addTo(mymap);
 
-document.addEventListener('DOMContentLoaded', function() {
-  const elems = document.querySelectorAll('.fixed-action-btn');
-  const instances = M.FloatingActionButton.init(elems, {
-    toolbarEnabled: true
+document.addEventListener('DOMContentLoaded', function () {
+  const fabsToolbar = document.querySelectorAll('.fixed-action-btn.toolbar');
+  const fabsControls = document.querySelectorAll('.fixed-action-btn.controls');
+  const tooltipped = document.querySelectorAll('.tooltipped');
+  const modal = document.querySelectorAll('.modal');
+  const select = document.querySelectorAll('select');
+  M.FloatingActionButton.init(fabsToolbar, {
+    toolbarEnabled: true,
   });
+  M.FloatingActionButton.init(fabsControls, {
+    direction: 'right' /* 
+    hoverEnabled: false, */,
+  });
+  M.Tooltip.init(tooltipped, { enterDelay: 500 });
+  M.Modal.init(modal, {});
+  M.FormSelect.init(select, {});
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-  const elems = document.querySelectorAll('.tooltipped');
-  const instances = M.Tooltip.init(elems, {enterDelay:500});
+zoomIn.addEventListener('click', () => {
+  mymap.zoomIn();
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-  const elems = document.querySelectorAll('.modal');
-  const instances = M.Modal.init(elems, {});
+zoomOut.addEventListener('click', () => {
+  mymap.zoomOut();
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-  const elems = document.querySelectorAll('select');
-  const instances = M.FormSelect.init(elems, {});
+center.addEventListener('click', () => {
+  mymap.flyTo([13.8333, -88.9167], 8);
 });
 
 submitButtonPunto.addEventListener('click', async () => {
@@ -62,16 +77,14 @@ submitButtonPunto.addEventListener('click', async () => {
 
   loader.style.visibility = 'visible';
   setTimeout(async () => {
-  
-      const [lat, lng] = await fetchPointData(date, magnitude, depth, true);
-      const marker = L.marker([Number(lat), Number(lng)]).addTo(mymap);
-      markers.push(marker);
-      loader.style.visibility = 'hidden'; 
+    const [lat, lng] = await fetchPointData(date, magnitude, depth, true);
+    const marker = L.marker([Number(lat), Number(lng)]).addTo(mymap);
+    markers.push(marker);
+    loader.style.visibility = 'hidden';
   }, 500);
 });
 
 submitNube.addEventListener('click', async () => {
-
   const dateElement = document.querySelector('#date-nube').value;
   const date = new Date(dateElement).getTime();
   const magnitudeElement = document.querySelector('#magnitude-nube');
@@ -82,36 +95,56 @@ submitNube.addEventListener('click', async () => {
 
   loader.style.visibility = 'visible';
 
-  setTimeout(async () => { 
-
-      const array = await fetchPointData(date, magnitude, depth, false);
-      array.forEach(({ depth, lat, lng, mag }) => {
-        const marker = L.marker([Number(lat), Number(lng)]).addTo(mymap);
-        const strDepth = `${depth}`.slice(0, 5);
-        const strMag = `${mag}`.slice(0, 3);
-        marker.bindPopup(
-          `<b>Magnitud: </b>${strMag}<br><b>Profundidad: </b>${strDepth} km`
-        );
-        markers.push(marker);
-      });
-      loader.style.visibility = 'hidden';  
+  setTimeout(async () => {
+    const array = await fetchPointData(date, magnitude, depth, false);
+    if (array.length === 0) {
+      Swal.fire(
+        'No hay resultados',
+        'La predicción de nuestro modelo no arrojó resultados'
+      );
+    }
+    array.forEach(({ depth, lat, lng, mag }) => {
+      const marker = L.marker([Number(lat), Number(lng)]).addTo(mymap);
+      const strDepth = `${depth}`.slice(0, 5);
+      const strMag = `${mag}`.slice(0, 3);
+      marker.bindPopup(
+        `<b>Magnitud: </b>${strMag}<br><b>Profundidad: </b>${strDepth} km`
+      );
+      markers.push(marker);
+    });
+    loader.style.visibility = 'hidden';
   }, 500);
 });
 
-document.querySelector('#clear').addEventListener('click', () => {
+clear.addEventListener('click', () => {
   markers.forEach((mark) => {
     mark.remove();
   });
+  if (heatMap) {
+    mymap.removeLayer(heatMap);
+  }
+  if (volcanes) {
+    volcanes.removeSubLayer('volcanes');
+  }
 });
 
-document.querySelector('#tutorial').addEventListener('click', () => {
-  swal({
-    title: 'Lo que puedes hacer',
-    text:
-      'En tremor puedes predecir epicentros de dos maneras, por un punto o por una nube de puntos. Puedes cambiar ' +
-      'el tipo en el slider de la derecha',
-    icon: 'info',
-  });
+tutorial.addEventListener('click', () => {
+  guides.start();
+});
+
+montain.addEventListener('click', () => {
+  const volc = L.WMS.source(
+    'http://geoserver.nelsoncaastro.me/geoserver/WGS84/wms',
+    {
+      layers: 'volcanes',
+      format: 'image/png',
+      transparent: true,
+      attribution: 'centro nacional de resgistros',
+    }
+  );
+  volcanes = volc;
+  volc.addSubLayer('volcanes');
+  volc.addTo(mymap);
 });
 
 document.querySelector('#heat').addEventListener('click', () => {
@@ -130,10 +163,14 @@ const fetchHeatData = async () => {
 };
 
 const showHeatMap = async () => {
-  const data = await fetchHeatData();
-  L.heatLayer(
-    data.map(({ magn, lat, lgn }) => {
-      return [lat, lgn, 5];
-    }), {radius:25}
-  ).addTo(mymap);
+  if (!heatMap) {
+    const data = await fetchHeatData();
+    const layer = L.heatLayer(
+      data.map(({ lat, lgn }) => {
+        return [lat, lgn, 5];
+      }),
+      { radius: 25 }
+    ).addTo(mymap);
+    heatMap = layer;
+  }
 };
