@@ -158,7 +158,7 @@ const fetchPointData = async (timestamp, magnitude, depth, checked) => {
 };
 
 const fetchHeatData = async () => {
-  const response = await fetch('/test');
+  const response = await fetch('/heat-points');
   return await response.json();
 };
 

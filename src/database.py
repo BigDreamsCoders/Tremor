@@ -33,8 +33,8 @@ class Sismos(Base):
   intensity = Column('intensidad', String)
   geom = Column('geom', Geometry(geometry_type="POINT", srid=100000))
 
-def getSismosPoints():
-  sismos = session.execute("select sismos.latitud, sismos.longitud, sismos.magnitud from sismos join \"departamentos\" as dept on st_intersects(dept.geom, sismos.geom)")
+def getSismosPointsWithinBoundaries():
+  sismos = session.execute("select sismos.latitud, sismos.longitud from sismos join \"departamentos\" as dept on st_intersects(dept.geom, sismos.geom)")
   data = sismos.fetchall()
   sismos.close()
   array=[]
@@ -42,6 +42,14 @@ def getSismosPoints():
     array.append({
             "lat": float(entry[0]),
             "lgn": float(entry[1]),
-            "magn": float(entry[2])
         })
+  return array
+
+def getAllSismosPoints(timestamp):
+  sismos = session.execute("select sismos.latitud, sismos.longitud from sismos;")
+  data = sismos.fetchall()
+  sismos.close()
+  array=[]
+  for entry in data:
+    array.append([timestamp, float(entry[0]), float(entry[1])])
   return array

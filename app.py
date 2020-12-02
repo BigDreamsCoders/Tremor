@@ -4,7 +4,7 @@ import csv
 import math
 import joblib
 from flask import (Flask, jsonify, render_template, request)
-from src.database import getSismosPoints
+from src.database import getSismosPointsWithinBoundaries, getAllSismosPoints
 
 app = Flask(__name__)
 app.modelLatitudLongitud = joblib.load('static/LatitudLonguitud.sav')
@@ -22,21 +22,7 @@ def magdepth():
     timestamp = args.get("timestamp")
     mag = int(args.get("magnitude"))
     depth = int(args.get("depth"))
-    with open('static/Sismos-el-salvador.csv', encoding='utf8') as csv_file:
-        data = csv.reader(csv_file)
-        first_line = True
-        points = []
-        for row in data:
-            if not first_line:
-                points.append(
-                    [
-                        timestamp,
-                        float(row[2]),
-                        float(row[3])
-                    ]
-                )
-            else:
-                first_line = False
+    points = getAllSismosPoints(timestamp)
     response = []
     magdepth = app.modelMagnitudProfundidad.predict(
         points
@@ -61,9 +47,9 @@ def latlng():
     )
     return jsonify([d[0][0], d[0][1]])
 
-@app.route('/test')
-def test():
-    data = getSismosPoints()
+@app.route('/heat-points')
+def sismosWithinBoundaries():
+    data = getSismosPointsWithinBoundaries()
     return jsonify(data)
 
 
