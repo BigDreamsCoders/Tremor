@@ -6,7 +6,7 @@ itsdangerous==1.1.0
 Jinja2==2.11.3
 joblib==0.15.1
 MarkupSafe==1.1.1
-numpy==1.18.5
+numpy==1.22.0
 psycopg2==2.8.6
 python-decouple==3.3
 python-dotenv==0.15.0
